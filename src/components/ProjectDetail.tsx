@@ -33,6 +33,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ language, projects }) => 
     if (url.startsWith('http://') || url.startsWith('https://')) {
       return url;
     }
+    if (url.startsWith(import.meta.env.BASE_URL)) {
+      return url;
+    }
     const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
     return `${import.meta.env.BASE_URL}${cleanUrl}`;
   };
