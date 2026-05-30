@@ -138,7 +138,7 @@ const Navbar: React.FC<NavbarProps> = ({ language, setLanguage }) => {
                     onClick={() => scrollTo('contato')}
                     className="px-8 py-2.5 rounded-full text-[11px] font-sans uppercase tracking-[0.15em] border border-white/20 hover:border-white hover:text-white transition-all text-white/80"
                   >
-                    CONTACT
+                    {t.nav.cta}
                   </button>
                 </div>
               </div>
