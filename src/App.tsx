@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
@@ -36,7 +36,7 @@ const WhatsappIcon = ({ size = 28, className = "" }) => (
 );
 import { Project, SkillCategory, Article, DesignStep } from './types';
 import { translations, Language } from './translations';
-import ProjectDetail from './components/ProjectDetail';
+const ProjectDetail = lazy(() => import('./components/ProjectDetail'));
 
 import Layout from './components/Layout';
 import WaveMesh from './components/WaveMesh';
@@ -210,7 +210,11 @@ function Home({ language }: { language: Language }) {
             <div className="relative z-10 aspect-square rounded-[3rem] overflow-hidden glass-card">
               <img 
                 src={import.meta.env.BASE_URL + "avatarnovo.png"} 
-                alt="Daniel Leite" 
+                alt="Daniel Leite - Design Engineer & Senior Product Designer" 
+                width="600"
+                height="600"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-contain bg-black/20 hover:scale-105 transition-all duration-1000"
                 referrerPolicy="no-referrer"
               />
@@ -336,7 +340,11 @@ function Home({ language }: { language: Language }) {
                   <div className="relative aspect-[16/10] rounded-[2.5rem] overflow-hidden mb-8 glass-card border-white/5">
                     <img 
                       src={project.imageUrl} 
-                      alt={project.title} 
+                      alt={project.title}
+                      width="1600"
+                      height="1000"
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                       referrerPolicy="no-referrer"
                     />
@@ -354,7 +362,7 @@ function Home({ language }: { language: Language }) {
                   </Link>
                   <div className="flex flex-wrap gap-3">
                     {project.tags.map(tag => (
-                      <span key={tag} className="px-4 py-1.5 bg-white/5 rounded-full text-[10px] font-bold uppercase tracking-widest text-white/50 border border-white/5">
+                      <span key={tag} className="px-4 py-1.5 bg-white/5 rounded-full text-[10px] font-bold uppercase tracking-widest text-white/70 border border-white/5">
                         {tag}
                       </span>
                     ))}
@@ -484,7 +492,18 @@ export default function App() {
       <Layout language={language} setLanguage={setLanguage}>
         <Routes>
           <Route path="/" element={<Home language={language} />} />
-          <Route path="/project/:projectId" element={<ProjectDetail language={language} projects={projects} />} />
+          <Route path="/project/:projectId" element={
+            <Suspense fallback={
+              <div className="min-h-screen flex items-center justify-center bg-[#050505]">
+                <div className="flex flex-col items-center gap-4">
+                  <div className="w-8 h-8 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
+                  <span className="text-brand-accent text-xs uppercase tracking-widest">Loading</span>
+                </div>
+              </div>
+            }>
+              <ProjectDetail language={language} projects={projects} />
+            </Suspense>
+          } />
         </Routes>
       </Layout>
     </HashRouter>

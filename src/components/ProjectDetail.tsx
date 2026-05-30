@@ -86,11 +86,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ language, projects }) => 
             <h3 className="text-yellow-400 font-bold uppercase tracking-widest text-xs mb-6">Informações do Projeto</h3>
             <div className="space-y-8">
               <div>
-                <p className="text-white/40 text-[10px] uppercase tracking-widest mb-1">Papel</p>
+                <p className="text-white/60 text-[10px] uppercase tracking-widest mb-1">Papel</p>
                 <p className="text-xl font-display font-bold">{projectT.role}</p>
               </div>
               <div>
-                <p className="text-white/40 text-[10px] uppercase tracking-widest mb-1">Objetivo</p>
+                <p className="text-white/60 text-[10px] uppercase tracking-widest mb-1">Objetivo</p>
                 <p className="text-lg text-white/80 leading-relaxed">
                   {project.id === 'recruitersys'
                     ? 'O objetivo do RecruiterSys foi estruturar uma experiência digital mais clara, eficiente e orientada a resultados para todo o fluxo de recrutamento em tecnologia, reduzindo ruídos entre recrutadores e candidatos, aumentando a qualidade do matching e transformando etapas operacionais em uma jornada mais fluida, com decisões guiadas por dados e interações mais objetivas para todos os envolvidos no processo.'
@@ -139,10 +139,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ language, projects }) => 
           {project.id === 'recruitersys' && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="rounded-2xl overflow-hidden border border-white/10 aspect-video">
-                <img src={group27} alt="Value Proposition Recruiter" className="w-full h-full object-contain bg-black/20" />
+                <img src={group27} alt="Value Proposition Recruiter" width="1280" height="720" loading="lazy" decoding="async" className="w-full h-full object-contain bg-black/20" />
               </div>
               <div className="rounded-2xl overflow-hidden border border-white/10 aspect-video">
-                <img src={import.meta.env.BASE_URL + "Group 26.png"} alt="Value Proposition Candidate" className="w-full h-full object-contain bg-black/20" />
+                <img src={import.meta.env.BASE_URL + "Group 26.png"} alt="Value Proposition Candidate" width="1280" height="720" loading="lazy" decoding="async" className="w-full h-full object-contain bg-black/20" />
               </div>
             </div>
           )}
@@ -179,19 +179,19 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ language, projects }) => 
             <>
               <div className="mb-16">
                 <div className="rounded-3xl overflow-hidden border border-white/5 mb-8">
-                   <img src={group24} alt="Process Overview" className="w-full h-auto" />
+                   <img src={group24} alt="Process Overview" width="1920" height="1080" loading="lazy" decoding="async" className="w-full h-auto" />
                 </div>
                 <div className="rounded-3xl overflow-hidden border border-white/5">
-                   <img src={group25} alt="User Flow" className="w-full" />
+                   <img src={group25} alt="User Flow" width="1920" height="1080" loading="lazy" decoding="async" className="w-full" />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                  <div className="rounded-2xl overflow-hidden border border-white/10 aspect-video">
-                    <img src={group30} alt="Research Illustration 1" className="w-full h-full object-contain bg-black/20" />
+                    <img src={group30} alt="Research Illustration 1" width="1280" height="720" loading="lazy" decoding="async" className="w-full h-full object-contain bg-black/20" />
                  </div>
                  <div className="rounded-2xl overflow-hidden border border-white/10 aspect-video">
-                    <img src={group31} alt="Research Illustration 2" className="w-full h-full object-contain bg-black/20" />
+                    <img src={group31} alt="Research Illustration 2" width="1280" height="720" loading="lazy" decoding="async" className="w-full h-full object-contain bg-black/20" />
                  </div>
               </div>
             </>
@@ -217,12 +217,12 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ language, projects }) => 
               </div>
               {project.id === 'recruitersys' && (
                 <div className="rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-                  <img src={group22} alt="Recruiter Dashboard" className="w-full h-auto" />
+                  <img src={group22} alt="Recruiter Dashboard" width="1920" height="1080" loading="lazy" decoding="async" className="w-full h-auto" />
                 </div>
               )}
               {project.id === 'ai-lab' && (
                 <div className="rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-                  <img src={import.meta.env.BASE_URL + "mockupventihome.png"} alt="VentHome Mockup" className="w-full h-auto" />
+                  <img src={import.meta.env.BASE_URL + "mockupventihome.png"} alt="VentHome Mockup" width="1920" height="1080" loading="lazy" decoding="async" className="w-full h-auto" />
                 </div>
               )}
             </div>
@@ -233,11 +233,15 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ language, projects }) => 
                   <div key={index} className="rounded-2xl overflow-hidden border border-white/10 bg-black/20 flex flex-col justify-between">
                     <img 
                       src={resolveMediaUrl(item.url)} 
-                      alt={item.caption || `Pet Plant Media ${index + 1}`} 
+                      alt={item.caption || `Pet Plant Media ${index + 1}`}
+                      width="1200"
+                      height="900"
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-auto max-h-[400px] object-contain p-4 mx-auto" 
                     />
                     {item.caption && (
-                      <div className="p-4 bg-white/5 text-sm text-white/50 text-center italic mt-auto">
+                      <div className="p-4 bg-white/5 text-sm text-white/70 text-center italic mt-auto">
                         {item.caption}
                       </div>
                     )}
@@ -263,7 +267,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ language, projects }) => 
                 </div>
                 {project.id === 'recruitersys' && (
                   <div className="lg:order-1 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-                    <img src={mock1} alt="Candidate App" className="w-full h-auto" />
+                    <img src={mock1} alt="Candidate App" width="1920" height="1080" loading="lazy" decoding="async" className="w-full h-auto" />
                   </div>
                 )}
               </div>
@@ -276,8 +280,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ language, projects }) => 
           <section>
             <h2 className="text-3xl font-display font-bold mb-12 text-center">User Personas</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-               <img src={group28} alt="Persona Candidate" className="rounded-2xl border border-white/10" />
-               <img src={group29} alt="Persona Recruiter" className="rounded-2xl border border-white/10" />
+               <img src={group28} alt="Persona Candidate" width="1200" height="900" loading="lazy" decoding="async" className="rounded-2xl border border-white/10" />
+               <img src={group29} alt="Persona Recruiter" width="1200" height="900" loading="lazy" decoding="async" className="rounded-2xl border border-white/10" />
             </div>
           </section>
         )}
@@ -325,7 +329,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ language, projects }) => 
                 </div>
               </div>
               <div className="rounded-3xl overflow-hidden border border-white/5 shadow-2xl mt-8">
-                 <img src={group32} alt="Project Exhibition" className="w-full h-auto" />
+                 <img src={group32} alt="Project Exhibition" width="1920" height="1080" loading="lazy" decoding="async" className="w-full h-auto" />
               </div>
             </>
           )}
@@ -386,6 +390,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ language, projects }) => 
             <img
               src={project.imageUrl}
               alt={project.title}
+              width="1280"
+              height="720"
+              decoding="async"
               className="w-full h-full object-contain bg-black/20"
               referrerPolicy="no-referrer"
             />
@@ -474,6 +481,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ language, projects }) => 
                   <img
                     src={resolveMediaUrl(item.url)}
                     alt={item.caption || `Project Detail ${index + 1}`}
+                    width="1920"
+                    height="1080"
+                    loading="lazy"
+                    decoding="async"
                     className={`w-full h-full object-contain bg-black/20 ${
                       project.id === 'diario-aeronautico' ? 'max-h-[520px]' : ''
                     }`}
@@ -481,7 +492,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ language, projects }) => 
                   />
                 )}
                 {item.caption && (
-                  <div className="p-4 bg-white/5 text-sm text-white/50 text-center italic">
+                  <div className="p-4 bg-white/5 text-sm text-white/70 text-center italic">
                     {item.caption}
                   </div>
                 )}
@@ -511,7 +522,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ language, projects }) => 
                   <div className="relative aspect-[16/10] rounded-3xl overflow-hidden mb-6 glass-card border-white/5">
                     <img 
                       src={resolveMediaUrl(otherProject.imageUrl)} 
-                      alt={otherProject.title} 
+                      alt={otherProject.title}
+                      width="1600"
+                      height="1000"
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                       referrerPolicy="no-referrer"
                     />
