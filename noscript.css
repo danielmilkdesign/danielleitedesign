@@ -1,0 +1,50 @@
+body {
+  background: #050505;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 2rem;
+  line-height: 1.6;
+}
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+h2 {
+  font-size: 1.4rem;
+  margin-top: 2rem;
+  color: #f0c040;
+}
+a {
+  color: #f0c040;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border: 1px solid #f0c040;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: #f0c040;
+  margin-bottom: 1.5rem;
+}
+.project {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  border: 1px solid #333;
+  border-radius: 1rem;
+}
+.skills {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+.contact {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #333;
+}
