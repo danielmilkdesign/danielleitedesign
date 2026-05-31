@@ -42,12 +42,19 @@ import Layout from './components/Layout';
 import WaveMesh from './components/WaveMesh';
 import { ComplexWireframeSphere, WireframeSphere, WireframeGrid, DecoStar, ZigzagLine, CircleGrid, WireframeTorus, WireframePlane, Glass3DBox } from './components/Shapes';
 
-// Scroll to top on route change
-const ScrollToTop = () => {
-  const { pathname } = useLocation();
+// Scroll to top on route change + GA4 page_view tracking
+const ScrollToTop = ({ measurementId }: { measurementId: string }) => {
+  const { pathname, hash } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [pathname]);
+    // Track page view on route change for SPA
+    if (typeof window.gtag === 'function') {
+      window.gtag('config', measurementId, {
+        page_title: document.title,
+        page_path: pathname + hash,
+      });
+    }
+  }, [pathname, hash]);
   return null;
 };
 
@@ -488,7 +495,7 @@ export default function App() {
 
   return (
     <HashRouter>
-      <ScrollToTop />
+      <ScrollToTop measurementId="G-XXXXXXXXXX" />
       <Layout language={language} setLanguage={setLanguage}>
         <Routes>
           <Route path="/" element={<Home language={language} />} />
