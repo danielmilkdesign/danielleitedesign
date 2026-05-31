@@ -495,7 +495,7 @@ export default function App() {
 
   return (
     <HashRouter>
-      <ScrollToTop measurementId="G-XXXXXXXXXX" />
+      <ScrollToTop measurementId="G-VWS7D61TCP" />
       <Layout language={language} setLanguage={setLanguage}>
         <Routes>
           <Route path="/" element={<Home language={language} />} />
