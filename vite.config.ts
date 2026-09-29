@@ -12,6 +12,7 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         input: {
           main: path.resolve(__dirname, 'index.html'),
+          liquidglass: path.resolve(__dirname, 'liquidglass.html'),
           recruitersys: path.resolve(__dirname, 'recruitersys.html'),
           diarioEdb: path.resolve(__dirname, 'diario-edb.html'),
           petplant: path.resolve(__dirname, 'petplant.html'),
