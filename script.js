@@ -1,4 +1,8 @@
-﻿import { gsap } from 'gsap';
+﻿/* ========================================================
+   Daniel Leite Portfolio - High Performance Engine
+   ======================================================== */
+
+import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import {
@@ -24,37 +28,20 @@ import {
   ArrowLeft
 } from 'lucide';
 
-// Ensure GSAP plugins are registered
 gsap.registerPlugin(ScrollTrigger);
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Initialize Only Used Icons for Ultra-Lightweight Bundle
-    createIcons({
-        icons: {
-            ArrowUpRight,
-            Menu,
-            X,
-            ArrowDown,
-            MessageSquare,
-            ChevronDown,
-            User,
-            Briefcase,
-            ArrowRight,
-            Layers,
-            Target,
-            Check,
-            Palette,
-            Cpu,
-            GitCommit,
-            Mail,
-            Linkedin,
-            Phone,
-            ArrowLeft
-        }
-    });
+    try {
+        createIcons({
+            icons: {
+                ArrowUpRight, Menu, X, ArrowDown, MessageSquare, ChevronDown,
+                User, Briefcase, ArrowRight, Layers, Target, Check,
+                Palette, Cpu, GitCommit, Mail, Linkedin, Phone, ArrowLeft
+            }
+        });
+    } catch (e) {}
 
-    // 2. Initialize Core Performance Systems
-    initHeroVideoPerformance();
+    initHeroVideo();
     initLenis();
     initCursor();
     initEdgeGlowButtons();
@@ -67,11 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* --------------------------------------------------------
-   Hero Video Performance & Viewport Controller
+   Hero Video Controller (Zero-Jank Hardware Accelerated)
    -------------------------------------------------------- */
-let isHeroVisible = true;
-
-function initHeroVideoPerformance() {
+function initHeroVideo() {
     const video = document.querySelector('#hero video');
     if (!video) return;
 
@@ -79,17 +64,19 @@ function initHeroVideoPerformance() {
     const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isSaveData = Boolean(navigator.connection?.saveData);
 
-    // Em telas pequenas, conexões lentas ou prefers-reduced-motion: não reproduz vídeo, exibe apenas o poster
     if (isMobile || isReducedMotion || isSaveData) {
         video.removeAttribute('autoplay');
         video.pause();
         return;
     }
 
-    // IntersectionObserver para pausar o vídeo fora da viewport e retomar ao voltar
+    // Garante que o vídeo toque imediatamente
+    video.play().catch(() => {});
+
+    let isVisible = true;
     const observer = new IntersectionObserver(([entry]) => {
-        isHeroVisible = entry.isIntersecting;
-        if (entry.isIntersecting) {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
             if (video.paused && !document.hidden) {
                 video.play().catch(() => {});
             }
@@ -98,70 +85,71 @@ function initHeroVideoPerformance() {
                 video.pause();
             }
         }
-    }, { threshold: 0.1 });
+    }, { threshold: 0.05 });
 
     observer.observe(video);
 
-    // Pausar na troca de aba (visibilitychange)
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
             if (!video.paused) video.pause();
-        } else if (isHeroVisible) {
+        } else if (isVisible) {
             video.play().catch(() => {});
         }
     });
 }
 
 /* --------------------------------------------------------
-   1. Lenis Smooth Scroll Setup
+   1. Lenis Smooth Scroll with State Caching
    -------------------------------------------------------- */
 let lenis = null;
 
 function initLenis() {
-    // Desativa smooth scroll artificial em dispositivos touch para melhor fluidez nativa
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    if (isTouchDevice) return;
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouch) return;
 
     lenis = new Lenis({
-        duration: 1.0,
+        duration: 0.9,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
         wheelMultiplier: 0.9,
     });
 
+    let lastNavbarScrolled = false;
+    const navbar = document.getElementById('navbar-inner');
+    const progressBar = document.getElementById('scroll-progress');
+
     lenis.on('scroll', (e) => {
         ScrollTrigger.update();
         
-        // Scroll Progress Bar
-        const progress = (e.scroll / (e.limit || 1)) * 100;
-        const progressBar = document.getElementById('scroll-progress');
+        // Progress Bar
         if (progressBar) {
-            progressBar.style.width = `${progress}%`;
+            const progress = (e.scroll / (e.limit || 1)) * 100;
+            progressBar.style.transform = `scaleX(${progress / 100})`;
         }
 
-        // Header Background state (Desktop >= 768px)
-        const navbar = document.getElementById('navbar-inner');
+        // Header Background State Caching (evita recalc a cada pixel)
         if (navbar && window.innerWidth >= 768) {
-            if (e.scroll > 40) {
-                navbar.classList.add('bg-dark-card/95', 'shadow-2xl', 'shadow-black/50', 'border-white/15');
-                navbar.classList.remove('bg-dark-card/90', 'border-white/10');
-            } else {
-                navbar.classList.remove('bg-dark-card/95', 'shadow-2xl', 'shadow-black/50', 'border-white/15');
-                navbar.classList.add('bg-dark-card/90', 'border-white/10');
+            const isScrolled = e.scroll > 40;
+            if (isScrolled !== lastNavbarScrolled) {
+                lastNavbarScrolled = isScrolled;
+                if (isScrolled) {
+                    navbar.classList.add('bg-dark-card/95', 'shadow-2xl', 'shadow-black/50', 'border-white/15');
+                    navbar.classList.remove('bg-dark-card/90', 'border-white/10');
+                } else {
+                    navbar.classList.remove('bg-dark-card/95', 'shadow-2xl', 'shadow-black/50', 'border-white/15');
+                    navbar.classList.add('bg-dark-card/90', 'border-white/10');
+                }
             }
         }
     });
 
-    // Unifica o loop de animação do Lenis com o GSAP Ticker
     gsap.ticker.add((time) => {
         lenis?.raf(time * 1000);
     });
-
-    gsap.ticker.lagSmoothing(0);
 }
 
 /* --------------------------------------------------------
-   Timeline Wheel Scroll Handler
+   Timeline Horizontal Scroll Handler
    -------------------------------------------------------- */
 function initTimelineScroll() {
     const container = document.getElementById('timeline-container');
@@ -188,22 +176,13 @@ function initTimelineScroll() {
         scrollTrigger: {
             trigger: section,
             pin: true,
-            scrub: 0.6,
+            scrub: 0.5,
             start: "top top",
-            end: () => "+=" + (getScrollAmount() + 500),
+            end: () => "+=" + (getScrollAmount() + 400),
             invalidateOnRefresh: true,
             anticipatePin: 1
         }
     });
-
-    container.addEventListener('wheel', (e) => {
-        if (e.deltaY !== 0) {
-            const maxScrollLeft = container.scrollWidth - container.clientWidth;
-            if ((container.scrollLeft < maxScrollLeft && e.deltaY > 0) || (container.scrollLeft > 0 && e.deltaY < 0)) {
-                // Wheel horizontal fallback
-            }
-        }
-    }, { passive: true });
 }
 
 /* --------------------------------------------------------
@@ -230,7 +209,7 @@ function initEdgeGlowButtons() {
 }
 
 /* --------------------------------------------------------
-   3. Custom Follower Cursor (Disabled on touch devices)
+   3. Custom Follower Cursor (Zero Transition Conflict)
    -------------------------------------------------------- */
 function initCursor() {
     const dot = document.getElementById('cursor-dot');
@@ -250,16 +229,16 @@ function initCursor() {
     window.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
-        dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+        dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
     }, { passive: true });
 
     function renderCursor() {
-        ringX += (mouseX - ringX) * 0.15;
-        ringY += (mouseY - ringY) * 0.15;
-        ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
         requestAnimationFrame(renderCursor);
     }
-    renderCursor();
+    requestAnimationFrame(renderCursor);
 
     const interactives = document.querySelectorAll('a, button, input, textarea, .edge-glow-btn, .edge-glow-btn-sm, .glow-card-border');
     interactives.forEach(el => {
@@ -269,7 +248,7 @@ function initCursor() {
 }
 
 /* --------------------------------------------------------
-   4. Ambient Grid Canvas (Throttled to 30fps & Paused on video/hidden tab)
+   4. Ambient Grid Canvas (Ultra-Lightweight 12 Particles)
    -------------------------------------------------------- */
 function initCanvasBg() {
     const canvas = document.getElementById('bg-canvas');
@@ -284,23 +263,30 @@ function initCanvasBg() {
         height = canvas.height = window.innerHeight;
     }, { passive: true });
 
-    const particles = Array.from({ length: 24 }, () => ({
+    const particles = Array.from({ length: 12 }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
         radius: Math.random() * 1.5 + 0.5,
-        vx: (Math.random() - 0.5) * 0.2,
-        vy: (Math.random() - 0.5) * 0.2,
-        alpha: Math.random() * 0.3 + 0.1
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: (Math.random() - 0.5) * 0.15,
+        alpha: Math.random() * 0.25 + 0.05
     }));
 
+    let isScrolling = false;
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+        isScrolling = true;
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => { isScrolling = false; }, 150);
+    }, { passive: true });
+
     let lastTime = 0;
-    const fpsInterval = 1000 / 30; // 30 FPS target
+    const fpsInterval = 1000 / 24; // 24 FPS target
 
     function draw(timestamp) {
         requestAnimationFrame(draw);
 
-        if (document.hidden) return;
-        if (isHeroVisible && window.innerWidth >= 768) return;
+        if (document.hidden || isScrolling) return;
 
         const elapsed = timestamp - lastTime;
         if (elapsed < fpsInterval) return;
@@ -320,22 +306,6 @@ function initCanvasBg() {
             ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(139, 92, 246, ${p.alpha})`;
             ctx.fill();
-
-            for (let j = i + 1; j < particles.length; j++) {
-                const p2 = particles[j];
-                const dx = p.x - p2.x;
-                const dy = p.y - p2.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-
-                if (dist < 90) {
-                    ctx.beginPath();
-                    ctx.moveTo(p.x, p.y);
-                    ctx.lineTo(p2.x, p2.y);
-                    ctx.strokeStyle = `rgba(6, 182, 212, ${0.08 * (1 - dist / 90)})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.stroke();
-                }
-            }
         }
     }
     requestAnimationFrame(draw);
@@ -346,10 +316,10 @@ function initCanvasBg() {
    -------------------------------------------------------- */
 function initGSAPAnimations() {
     gsap.from('.hero-reveal', {
-        y: 30,
+        y: 25,
         opacity: 0,
-        duration: 0.9,
-        stagger: 0.1,
+        duration: 0.8,
+        stagger: 0.08,
         ease: 'power3.out',
         delay: 0.05
     });
@@ -357,13 +327,13 @@ function initGSAPAnimations() {
     const headers = document.querySelectorAll('.section-header');
     headers.forEach(header => {
         gsap.from(header, {
-            y: 25,
+            y: 20,
             opacity: 0,
-            duration: 0.8,
+            duration: 0.7,
             ease: 'power3.out',
             scrollTrigger: {
                 trigger: header,
-                start: 'top 88%'
+                start: 'top 90%'
             }
         });
     });
@@ -371,13 +341,13 @@ function initGSAPAnimations() {
     const projectCards = document.querySelectorAll('.project-card');
     projectCards.forEach((card) => {
         gsap.from(card, {
-            y: 35,
+            y: 30,
             opacity: 0,
-            duration: 0.75,
+            duration: 0.7,
             ease: 'power3.out',
             scrollTrigger: {
                 trigger: card,
-                start: 'top 88%'
+                start: 'top 90%'
             }
         });
     });
@@ -385,14 +355,14 @@ function initGSAPAnimations() {
     const stepCards = document.querySelectorAll('.process-step');
     if (stepCards.length) {
         gsap.from(stepCards, {
-            y: 25,
+            y: 20,
             opacity: 0,
-            duration: 0.65,
-            stagger: 0.08,
+            duration: 0.6,
+            stagger: 0.06,
             ease: 'power3.out',
             scrollTrigger: {
                 trigger: '#process-grid',
-                start: 'top 88%'
+                start: 'top 90%'
             }
         });
     }
@@ -445,7 +415,7 @@ function initScrollToTop() {
 
     btn.addEventListener('click', () => {
         if (lenis) {
-            lenis.scrollTo(0, { duration: 1.2 });
+            lenis.scrollTo(0, { duration: 1.0 });
         } else {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
