@@ -10,35 +10,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#f0f4ff', 100: '#e0e9ff', 200: '#c7d7fe', 300: '#a4bcfd',
-                            400: '#7c98fb', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca',
-                            800: '#3730a3', 900: '#312e81', 950: '#0c0e27',
-                        },
-                        dark: { bg: '#000000', card: '#1E293B', surface: '#1E293B', border: '#334155' }
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        heading: ['Space Grotesk', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
     
-    <!-- Lucide Icons & GSAP + Lenis -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    
     
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -52,7 +26,7 @@
 
     <!-- NAVBAR -->
     <header class="fixed top-0 left-0 w-full z-50 px-6 lg:px-12 py-6">
-        <div id="navbar-inner" class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4 rounded-2xl bg-dark-card/70 border border-white/10 backdrop-blur-xl transition-all duration-300">
+        <div id="navbar-inner" class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4 rounded-2xl bg-dark-card/70 border border-white/10  transition-all duration-300">
             <a href="index.html#portfolio" class="flex items-center gap-2 text-sm font-semibold text-slate-300 hover:text-white transition-colors group">
                 <i data-lucide="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1"></i>
                 <span>Voltar ao Portfólio</span>
@@ -88,7 +62,7 @@
 
         <!-- Cover Image Showcase -->
         <div class="rounded-3xl border border-white/15 overflow-hidden bg-dark-card shadow-2xl">
-            <img src="assets/HORUZ.png" alt="Diário de Bordo Aeronáutico Hóruz eDB Showcase" class="w-full h-auto object-cover">
+            <img src="assets/horuz.webp" alt="Diário de Bordo Aeronáutico Hóruz eDB Showcase" class="w-full h-auto object-cover">
         </div>
 
         <!-- Challenges Section -->
@@ -122,11 +96,11 @@
             <h2 class="text-2xl sm:text-3xl font-heading font-bold text-white">Screenshots & Protótipo</h2>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
-                    <img src="assets/diario-edb-horuz.png" alt="Interface do Hóruz eDB em tablet, otimizada para uso operacional em cabine e preenchimento com foco em conformidade." class="w-full h-auto object-cover">
+                    <img src="assets/diario-edb-horuz.webp" alt="Interface do Hóruz eDB em tablet, otimizada para uso operacional em cabine e preenchimento com foco em conformidade." class="w-full h-auto object-cover">
                     <p class="p-3 text-xs text-slate-400 border-t border-white/5 bg-dark-card">Interface do Hóruz eDB em tablet, otimizada para uso operacional em cabine e preenchimento com foco em conformidade.</p>
                 </div>
                 <div class="rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
-                    <img src="assets/diario-cockpit.png" alt="Simulação do uso do EDB no cockpit do piloto" class="w-full h-auto object-cover">
+                    <img src="assets/diario-cockpit.webp" alt="Simulação do uso do EDB no cockpit do piloto" class="w-full h-auto object-cover">
                     <p class="p-3 text-xs text-slate-400 border-t border-white/5 bg-dark-card">Simulação do uso do EDB no cockpit do piloto</p>
                 </div>
             </div>
@@ -153,7 +127,7 @@
                     <div class="glow-card-border h-full">
                         <div class="bg-dark-card/90 rounded-2xl p-4 flex flex-col h-full space-y-4">
                             <div class="rounded-xl overflow-hidden border border-white/10 aspect-[16/10] bg-dark-bg">
-                                <img src="assets/CAPA RECRUITER.png" alt="RecruiterSys" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <img src="assets/capa-recruiter.webp" alt="RecruiterSys" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             </div>
                             <div class="space-y-2 flex-grow">
                                 <span class="text-[10px] font-mono font-semibold uppercase tracking-wider text-brand-400 block">PRODUCT DESIGN</span>
@@ -170,7 +144,7 @@
                     <div class="glow-card-border h-full">
                         <div class="bg-dark-card/90 rounded-2xl p-4 flex flex-col h-full space-y-4">
                             <div class="rounded-xl overflow-hidden border border-white/10 aspect-[16/10] bg-dark-bg">
-                                <img src="assets/MOCK PET PLANT.png" alt="Pet Plant App" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <img src="assets/mock-pet-plant.webp" alt="Pet Plant App" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             </div>
                             <div class="space-y-2 flex-grow">
                                 <span class="text-[10px] font-mono font-semibold uppercase tracking-wider text-emerald-400 block">PRODUCT DESIGN & IOT</span>
@@ -187,7 +161,7 @@
                     <div class="glow-card-border h-full">
                         <div class="bg-dark-card/90 rounded-2xl p-4 flex flex-col h-full space-y-4">
                             <div class="rounded-xl overflow-hidden border border-white/10 aspect-[16/10] bg-dark-bg">
-                                <img src="assets/VENTIHOME.png" alt="VentHome" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <img src="assets/ventihome.webp" alt="VentHome" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             </div>
                             <div class="space-y-2 flex-grow">
                                 <span class="text-[10px] font-mono font-semibold uppercase tracking-wider text-purple-400 block">UX/UI & IOT</span>
@@ -220,6 +194,6 @@
 
     </main>
 
-    <script src="script.js"></script>
+    <script type="module" src="./script.js"></script>
 </body>
 </html>
