@@ -1,5 +1,4 @@
-import tailwindcss from '@tailwindcss/vite';
-import react from '@vitejs/plugin-react';
+﻿import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 
@@ -7,20 +6,23 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
   
   return {
-    base: '/danielleitedesign/',
-    plugins: [react(), tailwindcss()],
-    define: {
-      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+    base: '/',
+    plugins: [tailwindcss()],
+    build: {
+      rollupOptions: {
+        input: {
+          main: path.resolve(__dirname, 'index.html'),
+          recruitersys: path.resolve(__dirname, 'recruitersys.html'),
+          diarioEdb: path.resolve(__dirname, 'diario-edb.html'),
+          petplant: path.resolve(__dirname, 'petplant.html'),
+          ventihome: path.resolve(__dirname, 'ventihome.html'),
+        },
+      },
     },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
       },
-    },
-    server: {
-      // // HMR is disabled in AI Studio via DISABLE_HMR env var.
-      // // Do not modify - file watching is disabled to prevent flickering during agent edits.
-      hmr: process.env.DISABLE_HMR !== 'true',
     },
   };
 });
